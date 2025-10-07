@@ -183,12 +183,15 @@ public class Program {
     }
 
     private static void mostrarCardapio() {
-        System.out.println(CYAN + BOLD + "\n═══════════ CARDÁPIO ManagerEAT ═══════════" + RESET);
-        System.out.println(YELLOW + "1  🍔 Big Mac ManagerEAT      " + GREEN + "R$ 18,50" + RESET);
-        System.out.println(YELLOW + "2  🥗 X-Salada ManagerEAT     " + GREEN + "R$ 15,00" + RESET);
-        System.out.println(YELLOW + "3  🥓 Bacon Burger Premium    " + GREEN + "R$ 22,00" + RESET);
-        System.out.println(YELLOW + "4  🍟 Batata Frita Grande     " + GREEN + "R$ 12,00" + RESET);
-        System.out.println(YELLOW + "5  🥤 Combo Refrigerante      " + GREEN + "R$ 10,50" + RESET);
+        System.out.println(CYAN + BOLD + "\n═══════════ CARDÁPIO PARA PEDIDOS ═══════════" + RESET);
+        
+        List<String> nomesLanches = GerenciadorLanches.getNomesLanches();
+        int contador = 1;
+        for (String nome : nomesLanches) {
+            Lanche lanche = GerenciadorLanches.buscarLanche(nome);
+            System.out.printf(YELLOW + "%d  %s      " + GREEN + "R$ %.2f\n" + RESET, 
+                contador++, nome, lanche.getPrecoBase());
+        }
         System.out.println(CYAN + "═══════════════════════════════════════════" + RESET);
     }
 
