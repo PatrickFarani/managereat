@@ -96,15 +96,58 @@ public class Program {
         ingredientesDisponiveis.add(new Ingrediente("Cheddar Cremoso", 3.50, "queijo"));
     }
 
+    private static boolean realizarLogin() {
+        System.out.println(CYAN + BOLD + "\n🔐 SISTEMA DE AUTENTICAÇÃO ManagerEAT" + RESET);
+        
+        // Mostrar credenciais de demonstração
+        for (String credencial : SistemaAutenticacao.getCredenciaisDemo()) {
+            System.out.println(YELLOW + credencial + RESET);
+        }
+        
+        System.out.print(BLUE + "\n👤 Login: " + RESET);
+        String login = sc.next();
+        System.out.print(BLUE + "🔑 Senha: " + RESET);
+        String senha = sc.next();
+        
+        if (SistemaAutenticacao.login(login, senha)) {
+            Usuario usuario = SistemaAutenticacao.getUsuarioLogado();
+            System.out.println(GREEN + "✅ Login realizado com sucesso!" + RESET);
+            System.out.printf(CYAN + "Bem-vindo, %s! Tipo: %s\n" + RESET, 
+                usuario.getNome(), usuario.getTipo());
+            return true;
+        } else {
+            System.out.println(RED + "❌ Login ou senha inválidos!" + RESET);
+            return false;
+        }
+    }
+
     private static void mostrarMenuPrincipal() {
+        Usuario usuario = SistemaAutenticacao.getUsuarioLogado();
         System.out.println(CYAN + BOLD + "\n═══════════ MENU PRINCIPAL ManagerEAT ═══════════" + RESET);
-        System.out.println(YELLOW + "1  🛒 Fazer Pedido" + RESET);
-        System.out.println(YELLOW + "2  📊 Ver Relatórios e Estatísticas" + RESET);
-        System.out.println(YELLOW + "3  👀 Ver Pedido Atual" + RESET);
-        System.out.println(YELLOW + "4  💳 Finalizar Pedido (com cotação USD)" + RESET);
+        System.out.printf(YELLOW + "👤 Logado como: %s (%s)\n" + RESET, usuario.getNome(), usuario.getTipo());
+        System.out.println(CYAN + "═══════════════════════════════════════════════" + RESET);
+        
+        System.out.println(YELLOW + "1  📋 Ver Cardápio Completo" + RESET);
+        System.out.println(YELLOW + "2  🛒 Fazer Pedido" + RESET);
+        System.out.println(YELLOW + "3  📦 Gerenciar Pedidos" + RESET);
+        
+        if (SistemaAutenticacao.podeGerenciarLanches()) {
+            System.out.println(YELLOW + "4  🍔 Gerenciar Lanches (Admin/Funcionário)" + RESET);
+        }
+        
+        if (SistemaAutenticacao.podeGerenciarIngredientes()) {
+            System.out.println(YELLOW + "5  🥬 Gerenciar Ingredientes (Admin)" + RESET);
+        }
+        
+        System.out.println(YELLOW + "6  📊 Ver Relatórios e Estatísticas" + RESET);
+        System.out.println(YELLOW + "7  🔄 Trocar Usuário" + RESET);
         System.out.println(RED + "0  🚪 Sair" + RESET);
         System.out.println(CYAN + "═══════════════════════════════════════════════" + RESET);
         System.out.print(BLUE + "Escolha uma opção: " + RESET);
+    }
+    
+    private static void mostrarCardapioCompleto() {
+        GerenciadorLanches.exibirCardapioCompleto();
     }
 
 
