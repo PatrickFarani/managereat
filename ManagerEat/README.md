@@ -94,7 +94,7 @@ O **ManagerEAT** é um sistema robusto de gestão de pedidos para lanchonetes, d
 ## 📁 Estrutura do Projeto
 
 ```
-JavaSnackBar-master/
+ManagerEat/
 ├── src/Application/
 │   ├── Program.java           # Classe principal com interface
 │   ├── Lanche.java           # Gestão de produtos e personalização
