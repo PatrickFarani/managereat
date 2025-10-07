@@ -103,20 +103,26 @@ public class Program {
                     break;
 
                 default:
-                    System.out.println("Código informado é inválido!\n");
+                    System.out.println(RED + "❌ Código informado é inválido! Tente novamente.\n" + RESET);
                     break;
             }
         } while (codigo != -1);
 
-        System.out.println("\nNOTA DA COMPRA:");
-        System.out.println("-------------------");
-        System.out.println("Produtos comprados:");
+        // Nota fiscal ManagerEAT
+        System.out.println(RED + BOLD + "\n╔════════════════════════════════════════╗" + RESET);
+        System.out.println(RED + BOLD + "║" + YELLOW + "          🧾 NOTA FISCAL ManagerEAT          " + RED + "║" + RESET);
+        System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
+        System.out.println(YELLOW + BOLD + "📦 Produtos comprados:" + RESET);
         for (int i = 0; i < produtos.size(); i++) {
-            System.out.printf("- %s: %d\n", produtos.get(i), quantidades_cada.get(i));
+            System.out.printf(YELLOW + "• %s: %d unidade(s)\n" + RESET, produtos.get(i), quantidades_cada.get(i));
         }
-        System.out.println("Total de produtos comprados: " + quantidade_total);
-        System.out.println("---------------------------");
-        System.out.printf("VALOR TOTAL A PAGAR: R$ %.2f\n", valor_total);
+        System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
+        System.out.println(CYAN + "📊 Total de produtos: " + quantidade_total + RESET);
+        System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
+        System.out.printf(GREEN + BOLD + "💰 VALOR TOTAL A PAGAR: R$ %.2f\n" + RESET, valor_total);
+        System.out.println(RED + BOLD + "╚════════════════════════════════════════╝" + RESET);
+        System.out.println(YELLOW + BOLD + "\n🎉 Obrigado por escolher o ManagerEAT! 🎉" + RESET);
+        System.out.println(CYAN + "Volte sempre! 😊\n" + RESET);
 
         sc.close();
     }
