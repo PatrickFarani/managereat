@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Program {
+    
+    // Códigos de cor ANSI
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String BOLD = "\u001B[1m";
 
     public static void main(String[] args) {
 
@@ -12,7 +20,15 @@ public class Program {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("BEM VINDO À LANCHONETE!\n");
+        // Logo ManagerEAT com arte ASCII do X-Salada
+        System.out.println(RED + BOLD + "╔══════════════════════════════════════╗" + RESET);
+        System.out.println(RED + BOLD + "║" + YELLOW + "            🍔 ManagerEAT 🍔           " + RED + "║" + RESET);
+        System.out.println(RED + BOLD + "╠══════════════════════════════════════╣" + RESET);
+        System.out.println(RED + BOLD + "║" + YELLOW + "     ████████   X-SALADA   ████████    " + RED + "║" + RESET);
+        System.out.println(RED + BOLD + "║" + YELLOW + "    ██      ██ 🥬🍅🧀🥓 ██      ██   " + RED + "║" + RESET);
+        System.out.println(RED + BOLD + "║" + YELLOW + "     ████████  DELICIOSO   ████████    " + RED + "║" + RESET);
+        System.out.println(RED + BOLD + "╚══════════════════════════════════════╝" + RESET);
+        System.out.println(YELLOW + BOLD + "\n🎉 BEM-VINDO AO ManagerEAT! 🎉\n" + RESET);
 
 
         int codigo;
