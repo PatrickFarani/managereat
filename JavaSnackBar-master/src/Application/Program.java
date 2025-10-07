@@ -1,7 +1,6 @@
 package Application;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Program {
     
@@ -12,15 +11,48 @@ public class Program {
     public static final String GREEN = "\u001B[32m";
     public static final String CYAN = "\u001B[36m";
     public static final String BOLD = "\u001B[1m";
+    public static final String BLUE = "\u001B[34m";
+
+    private static Scanner sc = new Scanner(System.in);
+    private static Pedido pedidoAtual = new Pedido();
+    
+    // Ingredientes disponíveis para personalização
+    private static ArrayList<Ingrediente> ingredientesDisponiveis = new ArrayList<>();
 
     public static void main(String[] args) {
+        inicializarIngredientes();
+        mostrarLogo();
+        
+        int opcao;
+        do {
+            mostrarMenuPrincipal();
+            opcao = sc.nextInt();
+            
+            switch (opcao) {
+                case 1:
+                    fazerPedido();
+                    break;
+                case 2:
+                    mostrarRelatórios();
+                    break;
+                case 3:
+                    verPedidoAtual();
+                    break;
+                case 4:
+                    finalizarPedido();
+                    break;
+                case 0:
+                    System.out.println(YELLOW + BOLD + "\n🎉 Obrigado por usar o ManagerEAT! Volte sempre! 🎉" + RESET);
+                    break;
+                default:
+                    System.out.println(RED + "❌ Opção inválida! Tente novamente." + RESET);
+            }
+        } while (opcao != 0);
+        
+        sc.close();
+    }
 
-        ArrayList<String> produtos = new ArrayList<>();
-        ArrayList<Integer> quantidades_cada = new ArrayList<>();
-
-        Scanner sc = new Scanner(System.in);
-
-        // Logo ManagerEAT com arte ASCII do X-Salada
+    private static void mostrarLogo() {
         System.out.println(RED + BOLD + "╔══════════════════════════════════════╗" + RESET);
         System.out.println(RED + BOLD + "║" + YELLOW + "            🍔 ManagerEAT 🍔           " + RED + "║" + RESET);
         System.out.println(RED + BOLD + "╠══════════════════════════════════════╣" + RESET);
@@ -28,7 +60,33 @@ public class Program {
         System.out.println(RED + BOLD + "║" + YELLOW + "    ██      ██ 🥬🍅🧀🥓 ██      ██   " + RED + "║" + RESET);
         System.out.println(RED + BOLD + "║" + YELLOW + "     ████████  DELICIOSO   ████████    " + RED + "║" + RESET);
         System.out.println(RED + BOLD + "╚══════════════════════════════════════╝" + RESET);
-        System.out.println(YELLOW + BOLD + "\n🎉 BEM-VINDO AO ManagerEAT! 🎉\n" + RESET);
+        System.out.println(YELLOW + BOLD + "\n🎉 BEM-VINDO AO ManagerEAT PREMIUM! 🎉" + RESET);
+        System.out.println(CYAN + "Sistema completo com personalização e relatórios!\n" + RESET);
+    }
+    
+    private static void inicializarIngredientes() {
+        ingredientesDisponiveis.add(new Ingrediente("Bacon Extra", 3.00, "proteína"));
+        ingredientesDisponiveis.add(new Ingrediente("Queijo Extra", 2.50, "queijo"));
+        ingredientesDisponiveis.add(new Ingrediente("Cebola Roxa", 1.50, "vegetal"));
+        ingredientesDisponiveis.add(new Ingrediente("Tomate Extra", 1.00, "vegetal"));
+        ingredientesDisponiveis.add(new Ingrediente("Alface Extra", 1.00, "vegetal"));
+        ingredientesDisponiveis.add(new Ingrediente("Picles", 1.50, "vegetal"));
+        ingredientesDisponiveis.add(new Ingrediente("Molho Barbecue", 2.00, "molho"));
+        ingredientesDisponiveis.add(new Ingrediente("Molho Ranch", 2.00, "molho"));
+        ingredientesDisponiveis.add(new Ingrediente("Pimenta Jalapeño", 2.50, "tempero"));
+        ingredientesDisponiveis.add(new Ingrediente("Cheddar Cremoso", 3.50, "queijo"));
+    }
+
+    private static void mostrarMenuPrincipal() {
+        System.out.println(CYAN + BOLD + "\n═══════════ MENU PRINCIPAL ManagerEAT ═══════════" + RESET);
+        System.out.println(YELLOW + "1  🛒 Fazer Pedido" + RESET);
+        System.out.println(YELLOW + "2  📊 Ver Relatórios e Estatísticas" + RESET);
+        System.out.println(YELLOW + "3  👀 Ver Pedido Atual" + RESET);
+        System.out.println(YELLOW + "4  💳 Finalizar Pedido (com cotação USD)" + RESET);
+        System.out.println(RED + "0  🚪 Sair" + RESET);
+        System.out.println(CYAN + "═══════════════════════════════════════════════" + RESET);
+        System.out.print(BLUE + "Escolha uma opção: " + RESET);
+    }
 
 
         int codigo;
