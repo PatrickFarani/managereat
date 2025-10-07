@@ -89,99 +89,213 @@ public class Program {
     }
 
 
+    private static void fazerPedido() {
         int codigo;
-        int quantidade_total = 0;
-        double valor_total = 0;
-
         do {
-            System.out.println(CYAN + BOLD + "═══════════ CARDÁPIO ManagerEAT ═══════════" + RESET);
-            System.out.println(YELLOW + "1  🍔 Big Mac ManagerEAT      " + GREEN + "R$ 18,50" + RESET);
-            System.out.println(YELLOW + "2  🥗 X-Salada ManagerEAT     " + GREEN + "R$ 15,00" + RESET);
-            System.out.println(YELLOW + "3  🥓 Bacon Burger Premium    " + GREEN + "R$ 22,00" + RESET);
-            System.out.println(YELLOW + "4  🍟 Batata Frita Grande     " + GREEN + "R$ 12,00" + RESET);
-            System.out.println(YELLOW + "5  🥤 Combo Refrigerante      " + GREEN + "R$ 10,50" + RESET);
-            System.out.println(CYAN + "═══════════════════════════════════════════" + RESET);
-            System.out.println(RED + "\n✋ Digite -1 para encerrar a compra." + RESET);
-
+            mostrarCardapio();
+            System.out.print(BLUE + "Escolha um item (0 para voltar): " + RESET);
             codigo = sc.nextInt();
 
-            if (codigo == -1) {
+            if (codigo == 0) {
                 break;
             }
 
-            switch (codigo) {
-                case 1:
-                    System.out.println(YELLOW + "🍔 Big Mac ManagerEAT selecionado!" + RESET);
-                    System.out.println("Quantas unidades deseja?");
-                    int quantidade1 = sc.nextInt();
-                    valor_total += quantidade1 * 18.50;
-                    quantidade_total += quantidade1;
-                    produtos.add("Big Mac ManagerEAT");
-                    quantidades_cada.add(quantidade1);
-                    break;
-
-                case 2:
-                    System.out.println(YELLOW + "🥗 X-Salada ManagerEAT selecionado!" + RESET);
-                    System.out.println("Quantas unidades deseja?");
-                    int quantidade2 = sc.nextInt();
-                    valor_total += quantidade2 * 15.00;
-                    quantidade_total += quantidade2;
-                    produtos.add("X-Salada ManagerEAT");
-                    quantidades_cada.add(quantidade2);
-                    break;
-
-                case 3:
-                    System.out.println(YELLOW + "🥓 Bacon Burger Premium selecionado!" + RESET);
-                    System.out.println("Quantas unidades deseja?");
-                    int quantidade3 = sc.nextInt();
-                    valor_total += quantidade3 * 22.00;
-                    quantidade_total += quantidade3;
-                    produtos.add("Bacon Burger Premium");
-                    quantidades_cada.add(quantidade3);
-                    break;
-
-                case 4:
-                    System.out.println(YELLOW + "🍟 Batata Frita Grande selecionada!" + RESET);
-                    System.out.println("Quantas unidades deseja?");
-                    int quantidade4 = sc.nextInt();
-                    valor_total += quantidade4 * 12.00;
-                    quantidade_total += quantidade4;
-                    produtos.add("Batata Frita Grande");
-                    quantidades_cada.add(quantidade4);
-                    break;
-
-                case 5:
-                    System.out.println(YELLOW + "🥤 Combo Refrigerante selecionado!" + RESET);
-                    System.out.println("Quantas unidades deseja?");
-                    int quantidade5 = sc.nextInt();
-                    valor_total += quantidade5 * 10.50;
-                    quantidade_total += quantidade5;
-                    produtos.add("Combo Refrigerante");
-                    quantidades_cada.add(quantidade5);
-                    break;
-
-                default:
-                    System.out.println(RED + "❌ Código informado é inválido! Tente novamente.\n" + RESET);
-                    break;
+            Lanche lanche = criarLanche(codigo);
+            if (lanche != null) {
+                System.out.print("Quantas unidades deseja? ");
+                int quantidade = sc.nextInt();
+                lanche.setQuantidade(quantidade);
+                
+                // Opção de personalização
+                System.out.print(YELLOW + "Deseja personalizar este lanche? (s/n): " + RESET);
+                String personalizar = sc.next();
+                
+                if (personalizar.equalsIgnoreCase("s")) {
+                    personalizarLanche(lanche);
+                }
+                
+                pedidoAtual.adicionarLanche(lanche);
+                System.out.println(GREEN + "✅ Item adicionado ao pedido!" + RESET);
             }
-        } while (codigo != -1);
+        } while (codigo != 0);
+    }
 
-        // Nota fiscal ManagerEAT
+    private static void mostrarCardapio() {
+        System.out.println(CYAN + BOLD + "\n═══════════ CARDÁPIO ManagerEAT ═══════════" + RESET);
+        System.out.println(YELLOW + "1  🍔 Big Mac ManagerEAT      " + GREEN + "R$ 18,50" + RESET);
+        System.out.println(YELLOW + "2  🥗 X-Salada ManagerEAT     " + GREEN + "R$ 15,00" + RESET);
+        System.out.println(YELLOW + "3  🥓 Bacon Burger Premium    " + GREEN + "R$ 22,00" + RESET);
+        System.out.println(YELLOW + "4  🍟 Batata Frita Grande     " + GREEN + "R$ 12,00" + RESET);
+        System.out.println(YELLOW + "5  🥤 Combo Refrigerante      " + GREEN + "R$ 10,50" + RESET);
+        System.out.println(CYAN + "═══════════════════════════════════════════" + RESET);
+    }
+
+    private static Lanche criarLanche(int codigo) {
+        switch (codigo) {
+            case 1:
+                System.out.println(YELLOW + "🍔 Big Mac ManagerEAT selecionado!" + RESET);
+                return new Lanche("Big Mac ManagerEAT", 18.50);
+            case 2:
+                System.out.println(YELLOW + "🥗 X-Salada ManagerEAT selecionado!" + RESET);
+                return new Lanche("X-Salada ManagerEAT", 15.00);
+            case 3:
+                System.out.println(YELLOW + "🥓 Bacon Burger Premium selecionado!" + RESET);
+                return new Lanche("Bacon Burger Premium", 22.00);
+            case 4:
+                System.out.println(YELLOW + "🍟 Batata Frita Grande selecionada!" + RESET);
+                return new Lanche("Batata Frita Grande", 12.00);
+            case 5:
+                System.out.println(YELLOW + "🥤 Combo Refrigerante selecionado!" + RESET);
+                return new Lanche("Combo Refrigerante", 10.50);
+            default:
+                System.out.println(RED + "❌ Código inválido!" + RESET);
+                return null;
+        }
+    }
+
+    private static void personalizarLanche(Lanche lanche) {
+        System.out.println(CYAN + BOLD + "\n🔧 PERSONALIZAÇÃO DO LANCHE" + RESET);
+        System.out.println(YELLOW + "Ingredientes atuais do " + lanche.getNome() + ":" + RESET);
+        
+        for (Ingrediente ing : lanche.getIngredientesBase()) {
+            System.out.println(CYAN + "• " + ing.getNome() + RESET);
+        }
+        
+        int opcao;
+        do {
+            System.out.println(YELLOW + BOLD + "\nOpções de personalização:" + RESET);
+            System.out.println("1 - Adicionar ingrediente");
+            System.out.println("2 - Remover ingrediente");
+            System.out.println("0 - Finalizar personalização");
+            System.out.print(BLUE + "Escolha: " + RESET);
+            opcao = sc.nextInt();
+            
+            switch (opcao) {
+                case 1:
+                    adicionarIngrediente(lanche);
+                    break;
+                case 2:
+                    removerIngrediente(lanche);
+                    break;
+                case 0:
+                    System.out.println(GREEN + "✅ Personalização concluída!" + RESET);
+                    break;
+                default:
+                    System.out.println(RED + "❌ Opção inválida!" + RESET);
+            }
+        } while (opcao != 0);
+    }
+
+    private static void adicionarIngrediente(Lanche lanche) {
+        System.out.println(YELLOW + BOLD + "\n🍯 INGREDIENTES EXTRAS DISPONÍVEIS:" + RESET);
+        for (int i = 0; i < ingredientesDisponiveis.size(); i++) {
+            System.out.printf("%d - %s\n", (i + 1), ingredientesDisponiveis.get(i));
+        }
+        
+        System.out.print(BLUE + "Escolha o ingrediente (0 para cancelar): " + RESET);
+        int escolha = sc.nextInt();
+        
+        if (escolha > 0 && escolha <= ingredientesDisponiveis.size()) {
+            Ingrediente ingrediente = ingredientesDisponiveis.get(escolha - 1);
+            lanche.adicionarIngrediente(ingrediente);
+            System.out.println(GREEN + "✅ " + ingrediente.getNome() + " adicionado!" + RESET);
+        }
+    }
+
+    private static void removerIngrediente(Lanche lanche) {
+        ArrayList<Ingrediente> ingredientesBase = lanche.getIngredientesBase();
+        if (ingredientesBase.isEmpty()) {
+            System.out.println(RED + "❌ Não há ingredientes para remover!" + RESET);
+            return;
+        }
+        
+        System.out.println(YELLOW + BOLD + "\n❌ REMOVER INGREDIENTES:" + RESET);
+        for (int i = 0; i < ingredientesBase.size(); i++) {
+            System.out.printf("%d - %s\n", (i + 1), ingredientesBase.get(i).getNome());
+        }
+        
+        System.out.print(BLUE + "Escolha o ingrediente para remover (0 para cancelar): " + RESET);
+        int escolha = sc.nextInt();
+        
+        if (escolha > 0 && escolha <= ingredientesBase.size()) {
+            Ingrediente ingrediente = ingredientesBase.get(escolha - 1);
+            lanche.removerIngrediente(ingrediente);
+            System.out.println(GREEN + "✅ " + ingrediente.getNome() + " removido!" + RESET);
+        }
+    }
+
+    private static void mostrarRelatórios() {
+        RelatorioVendas.gerarRelatorioCompleto();
+    }
+
+    private static void verPedidoAtual() {
+        if (pedidoAtual.getLanches().isEmpty()) {
+            System.out.println(YELLOW + "🛒 Seu pedido está vazio!" + RESET);
+            return;
+        }
+        
+        System.out.println(CYAN + BOLD + "\n🛒 SEU PEDIDO ATUAL:" + RESET);
+        System.out.println(YELLOW + "Pedido #" + pedidoAtual.getNumeroPedido() + RESET);
+        
+        for (Lanche lanche : pedidoAtual.getLanches()) {
+            System.out.printf(CYAN + "• %s - R$ %.2f\n" + RESET, 
+                lanche.toString(), lanche.calcularPrecoFinal());
+        }
+        
+        System.out.println(YELLOW + "─────────────────────" + RESET);
+        System.out.printf(GREEN + BOLD + "💰 TOTAL: R$ %.2f\n" + RESET, pedidoAtual.getValorTotal());
+    }
+
+    private static void finalizarPedido() {
+        if (pedidoAtual.getLanches().isEmpty()) {
+            System.out.println(RED + "❌ Não há itens no pedido!" + RESET);
+            return;
+        }
+        
+        System.out.println(YELLOW + "💱 Buscando cotação do dólar..." + RESET);
+        double cotacao = CotacaoAPI.obterCotacaoDolar();
+        pedidoAtual.setCotacaoDolar(cotacao);
+        
+        // Gerar nota fiscal
+        gerarNotaFiscal();
+        
+        // Salvar pedido para relatórios
+        RelatorioVendas.salvarPedido(pedidoAtual);
+        
+        System.out.println(GREEN + BOLD + "\n✅ Pedido finalizado com sucesso!" + RESET);
+        
+        // Reiniciar pedido
+        pedidoAtual = new Pedido();
+    }
+
+    private static void gerarNotaFiscal() {
         System.out.println(RED + BOLD + "\n╔════════════════════════════════════════╗" + RESET);
         System.out.println(RED + BOLD + "║" + YELLOW + "          🧾 NOTA FISCAL ManagerEAT          " + RED + "║" + RESET);
         System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
-        System.out.println(YELLOW + BOLD + "📦 Produtos comprados:" + RESET);
-        for (int i = 0; i < produtos.size(); i++) {
-            System.out.printf(YELLOW + "• %s: %d unidade(s)\n" + RESET, produtos.get(i), quantidades_cada.get(i));
+        System.out.println(YELLOW + BOLD + "📦 Pedido #" + pedidoAtual.getNumeroPedido() + RESET);
+        System.out.println(CYAN + "Data: " + pedidoAtual.getDataHora().format(
+            java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")) + RESET);
+        System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
+        
+        for (Lanche lanche : pedidoAtual.getLanches()) {
+            System.out.printf(YELLOW + "• %s\n" + RESET, lanche.toString());
+            System.out.printf(GREEN + "  R$ %.2f\n" + RESET, lanche.calcularPrecoFinal());
         }
+        
         System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
-        System.out.println(CYAN + "📊 Total de produtos: " + quantidade_total + RESET);
+        System.out.println(CYAN + "📊 Total de itens: " + pedidoAtual.getTotalItens() + RESET);
         System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
-        System.out.printf(GREEN + BOLD + "💰 VALOR TOTAL A PAGAR: R$ %.2f\n" + RESET, valor_total);
+        System.out.printf(GREEN + BOLD + "💰 TOTAL (BRL): R$ %.2f\n" + RESET, pedidoAtual.getValorTotal());
+        
+        if (pedidoAtual.getCotacaoDolar() > 0) {
+            System.out.printf(YELLOW + "💵 Cotação USD: %s\n" + RESET, 
+                CotacaoAPI.formatarCotacao(pedidoAtual.getCotacaoDolar()));
+            System.out.printf(BLUE + BOLD + "💵 TOTAL (USD): %s\n" + RESET, 
+                CotacaoAPI.converterParaDolar(pedidoAtual.getValorTotal(), pedidoAtual.getCotacaoDolar()));
+        }
+        
         System.out.println(RED + BOLD + "╚════════════════════════════════════════╝" + RESET);
         System.out.println(YELLOW + BOLD + "\n🎉 Obrigado por escolher o ManagerEAT! 🎉" + RESET);
         System.out.println(CYAN + "Volte sempre! 😊\n" + RESET);
-
-        sc.close();
     }
 }
