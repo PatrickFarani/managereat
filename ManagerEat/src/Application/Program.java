@@ -23,6 +23,12 @@ public class Program {
         inicializarIngredientes();
         mostrarLogo();
         
+        // Sistema de autenticação obrigatório
+        if (!realizarLogin()) {
+            System.out.println(RED + "❌ Login necessário para usar o sistema!" + RESET);
+            return;
+        }
+        
         int opcao;
         do {
             mostrarMenuPrincipal();
@@ -30,16 +36,29 @@ public class Program {
             
             switch (opcao) {
                 case 1:
-                    fazerPedido();
+                    mostrarCardapioCompleto();
                     break;
                 case 2:
-                    mostrarRelatórios();
+                    fazerPedido();
                     break;
                 case 3:
-                    verPedidoAtual();
+                    gerenciarPedidos();
                     break;
                 case 4:
-                    finalizarPedido();
+                    gerenciarLanches();
+                    break;
+                case 5:
+                    gerenciarIngredientes();
+                    break;
+                case 6:
+                    mostrarRelatórios();
+                    break;
+                case 7:
+                    SistemaAutenticacao.logout();
+                    System.out.println(YELLOW + "👋 Logout realizado com sucesso!" + RESET);
+                    if (!realizarLogin()) {
+                        opcao = 0;
+                    }
                     break;
                 case 0:
                     System.out.println(YELLOW + BOLD + "\n🎉 Obrigado por usar o ManagerEAT! Volte sempre! 🎉" + RESET);
