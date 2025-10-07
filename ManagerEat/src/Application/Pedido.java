@@ -117,4 +117,5 @@ public class Pedido {
     public double getValorTotal() { return valorTotal; }
     public double getValorDolar() { return valorDolar; }
     public double getCotacaoDolar() { return cotacaoDolar; }
+    public SistemaDescontos.ResultadoDesconto getDescontos() { return descontos; }
 }
