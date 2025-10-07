@@ -55,7 +55,7 @@ brew install openjdk@17
 ### Método 1: Terminal/Prompt
 ```bash
 # Navegue até o diretório do projeto
-cd JavaSnackBar-master
+cd ManagerEat
 
 # Compile todas as classes
 javac src/Application/*.java
