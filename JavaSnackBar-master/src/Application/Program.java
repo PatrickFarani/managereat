@@ -36,13 +36,14 @@ public class Program {
         double valor_total = 0;
 
         do {
-            System.out.println("ESCOLHA SEUS PRODUTOS:");
-            System.out.println("1   Cachorro Quente   R$ 4.00");
-            System.out.println("2   X-Salada           R$ 4.50");
-            System.out.println("3   X-Bacon            R$ 5.00");
-            System.out.println("4   Torrada Simples    R$ 2.00");
-            System.out.println("5   Refrigerante       R$ 1.50");
-            System.out.println("\nDigite -1 para encerrar a compra.");
+            System.out.println(CYAN + BOLD + "═══════════ CARDÁPIO ManagerEAT ═══════════" + RESET);
+            System.out.println(YELLOW + "1  🍔 Big Mac ManagerEAT      " + GREEN + "R$ 18,50" + RESET);
+            System.out.println(YELLOW + "2  🥗 X-Salada ManagerEAT     " + GREEN + "R$ 15,00" + RESET);
+            System.out.println(YELLOW + "3  🥓 Bacon Burger Premium    " + GREEN + "R$ 22,00" + RESET);
+            System.out.println(YELLOW + "4  🍟 Batata Frita Grande     " + GREEN + "R$ 12,00" + RESET);
+            System.out.println(YELLOW + "5  🥤 Combo Refrigerante      " + GREEN + "R$ 10,50" + RESET);
+            System.out.println(CYAN + "═══════════════════════════════════════════" + RESET);
+            System.out.println(RED + "\n✋ Digite -1 para encerrar a compra." + RESET);
 
             codigo = sc.nextInt();
 
