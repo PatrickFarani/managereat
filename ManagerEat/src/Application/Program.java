@@ -250,15 +250,17 @@ public class Program {
 
     private static void adicionarIngrediente(Lanche lanche) {
         System.out.println(YELLOW + BOLD + "\n🍯 INGREDIENTES EXTRAS DISPONÍVEIS:" + RESET);
-        for (int i = 0; i < ingredientesDisponiveis.size(); i++) {
-            System.out.printf("%d - %s\n", (i + 1), ingredientesDisponiveis.get(i));
+        List<Ingrediente> ingredientesDisp = GerenciadorIngredientes.getIngredientesDisponiveis();
+        
+        for (int i = 0; i < ingredientesDisp.size(); i++) {
+            System.out.printf("%d - %s\n", (i + 1), ingredientesDisp.get(i));
         }
         
         System.out.print(BLUE + "Escolha o ingrediente (0 para cancelar): " + RESET);
         int escolha = sc.nextInt();
         
-        if (escolha > 0 && escolha <= ingredientesDisponiveis.size()) {
-            Ingrediente ingrediente = ingredientesDisponiveis.get(escolha - 1);
+        if (escolha > 0 && escolha <= ingredientesDisp.size()) {
+            Ingrediente ingrediente = ingredientesDisp.get(escolha - 1);
             lanche.adicionarIngrediente(ingrediente);
             System.out.println(GREEN + "✅ " + ingrediente.getNome() + " adicionado!" + RESET);
         }
