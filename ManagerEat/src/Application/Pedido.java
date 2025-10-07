@@ -12,6 +12,7 @@ public class Pedido {
     private double valorTotal;
     private double valorDolar;
     private double cotacaoDolar;
+    private SistemaDescontos.ResultadoDesconto descontos;
 
     public Pedido() {
         this.numeroPedido = contadorPedidos++;
