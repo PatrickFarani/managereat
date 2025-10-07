@@ -119,7 +119,7 @@ ManagerEat/
 1. **Clone ou baixe o projeto**
    ```bash
    git clone <repository-url>
-   cd JavaSnackBar-master
+   cd ManagerEat
    ```
 
 2. **Compile o projeto**
