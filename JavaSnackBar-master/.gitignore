@@ -1,0 +1,51 @@
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ids
+out/
+classes/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Build Tools ###
+# Maven
+target/
+pom.xml.tag
+
+# Gradle
+.gradle/
+build/
+
+### Sistemas Operacionais ###
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Linux
+*~
+
+### Logs/Temporários ###
+*.log
+*.tmp
