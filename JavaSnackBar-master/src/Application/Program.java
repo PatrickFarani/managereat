@@ -107,8 +107,8 @@ public class Program {
                 lanche.setQuantidade(quantidade);
                 
                 // Opção de personalização
-                System.out.print(YELLOW + "Deseja personalizar este lanche? (s/n): " + RESET);
-                String personalizar = sc.next();
+                System.out.print(YELLOW + "Deseja personalizar este lanche? (1=Sim, 0=Não): " + RESET);
+                int personalizar = sc.nextInt();
                 
                 if (personalizar.equalsIgnoreCase("s")) {
                     personalizarLanche(lanche);
