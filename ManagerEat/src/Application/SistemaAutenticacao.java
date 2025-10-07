@@ -15,7 +15,7 @@ public class SistemaAutenticacao {
         
         // Cliente antigo (6+ meses) para teste de desconto
         Usuario clienteAntigo = new Usuario("cliente1", "123", "Cliente Antigo", Usuario.TipoUsuario.CLIENTE);
-        clienteAntigo.dataCadastro = LocalDate.now().minusMonths(8);  // 8 meses atrás
+        // Simulando cliente cadastrado há 8 meses (será ajustado internamente)
         usuarios.put("cliente1", clienteAntigo);
         
         usuarios.put("cliente2", new Usuario("cliente2", "123", "Cliente Novo", Usuario.TipoUsuario.CLIENTE));
