@@ -466,6 +466,141 @@ public class Program {
         } while (opcao != 0);
     }
 
+    private static void incluirLanche() {
+        sc.nextLine(); // Limpar buffer
+        System.out.print(BLUE + "Nome do lanche: " + RESET);
+        String nome = sc.nextLine();
+        System.out.print(BLUE + "Preço base (R$): " + RESET);
+        double preco = sc.nextDouble();
+        
+        try {
+            GerenciadorLanches.incluirLanche(nome, preco);
+            System.out.println(GREEN + "✅ Lanche incluído com sucesso!" + RESET);
+        } catch (IllegalArgumentException e) {
+            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+        }
+    }
+    
+    private static void alterarLanche() {
+        GerenciadorLanches.exibirCardapioCompleto();
+        sc.nextLine(); // Limpar buffer
+        System.out.print(BLUE + "Nome do lanche para alterar: " + RESET);
+        String nomeAntigo = sc.nextLine();
+        System.out.print(BLUE + "Novo nome: " + RESET);
+        String novoNome = sc.nextLine();
+        System.out.print(BLUE + "Novo preço (R$): " + RESET);
+        double novoPreco = sc.nextDouble();
+        
+        try {
+            GerenciadorLanches.alterarLanche(nomeAntigo, novoNome, novoPreco);
+            System.out.println(GREEN + "✅ Lanche alterado com sucesso!" + RESET);
+        } catch (IllegalArgumentException e) {
+            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+        }
+    }
+    
+    private static void excluirLanche() {
+        GerenciadorLanches.exibirCardapioCompleto();
+        sc.nextLine(); // Limpar buffer
+        System.out.print(BLUE + "Nome do lanche para excluir: " + RESET);
+        String nome = sc.nextLine();
+        
+        try {
+            GerenciadorLanches.excluirLanche(nome);
+            System.out.println(GREEN + "✅ Lanche excluído com sucesso!" + RESET);
+        } catch (IllegalArgumentException e) {
+            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+        }
+    }
+    
+    private static void incluirIngrediente() {
+        sc.nextLine(); // Limpar buffer
+        System.out.print(BLUE + "Nome do ingrediente: " + RESET);
+        String nome = sc.nextLine();
+        System.out.print(BLUE + "Preço (R$): " + RESET);
+        double preco = sc.nextDouble();
+        sc.nextLine(); // Limpar buffer
+        System.out.print(BLUE + "Categoria: " + RESET);
+        String categoria = sc.nextLine();
+        
+        try {
+            GerenciadorIngredientes.incluirIngrediente(nome, preco, categoria);
+            System.out.println(GREEN + "✅ Ingrediente incluído com sucesso!" + RESET);
+        } catch (IllegalArgumentException e) {
+            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+        }
+    }
+    
+    private static void alterarIngrediente() {
+        GerenciadorIngredientes.exibirListaIngredientes();
+        sc.nextLine(); // Limpar buffer
+        System.out.print(BLUE + "Nome do ingrediente para alterar: " + RESET);
+        String nome = sc.nextLine();
+        System.out.print(BLUE + "Novo preço (R$): " + RESET);
+        double novoPreco = sc.nextDouble();
+        sc.nextLine(); // Limpar buffer
+        System.out.print(BLUE + "Nova categoria: " + RESET);
+        String novaCategoria = sc.nextLine();
+        
+        try {
+            GerenciadorIngredientes.alterarIngrediente(nome, novoPreco, novaCategoria);
+            System.out.println(GREEN + "✅ Ingrediente alterado com sucesso!" + RESET);
+        } catch (IllegalArgumentException e) {
+            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+        }
+    }
+    
+    private static void excluirIngrediente() {
+        GerenciadorIngredientes.exibirListaIngredientes();
+        sc.nextLine(); // Limpar buffer
+        System.out.print(BLUE + "Nome do ingrediente para excluir: " + RESET);
+        String nome = sc.nextLine();
+        
+        try {
+            GerenciadorIngredientes.excluirIngrediente(nome);
+            System.out.println(GREEN + "✅ Ingrediente excluído com sucesso!" + RESET);
+        } catch (IllegalArgumentException e) {
+            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+        }
+    }
+
+    private static void gerarNotaFiscalCompleta() {
+        System.out.println(RED + BOLD + "\n╔════════════════════════════════════════╗" + RESET);
+        System.out.println(RED + BOLD + "║" + YELLOW + "          🧾 NOTA FISCAL ManagerEAT          " + RED + "║" + RESET);
+        System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
+        System.out.println(YELLOW + BOLD + "📦 Pedido #" + pedidoAtual.getNumeroPedido() + RESET);
+        System.out.println(CYAN + "Data: " + pedidoAtual.getDataHora().format(
+            java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")) + RESET);
+        System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
+        
+        for (Lanche lanche : pedidoAtual.getLanches()) {
+            System.out.printf(YELLOW + "• %s\n" + RESET, lanche.toString());
+            System.out.printf(GREEN + "  R$ %.2f\n" + RESET, lanche.calcularPrecoFinal());
+        }
+        
+        System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
+        
+        // Exibir descontos se existirem
+        if (pedidoAtual.getDescontos() != null) {
+            SistemaDescontos.exibirResumoDescontos(pedidoAtual.getDescontos());
+        }
+        
+        System.out.println(CYAN + "📊 Total de itens: " + pedidoAtual.getTotalItens() + RESET);
+        System.out.println(RED + BOLD + "╠════════════════════════════════════════╣" + RESET);
+        System.out.printf(GREEN + BOLD + "💰 TOTAL (BRL): R$ %.2f\n" + RESET, pedidoAtual.getValorTotal());
+        
+        if (pedidoAtual.getCotacaoDolar() > 0) {
+            System.out.printf(YELLOW + "💵 Cotação USD: %s\n" + RESET, 
+                CotacaoAPI.formatarCotacao(pedidoAtual.getCotacaoDolar()));
+            System.out.printf(BLUE + BOLD + "💵 TOTAL (USD): %s\n" + RESET, 
+                CotacaoAPI.converterParaDolar(pedidoAtual.getValorTotal(), pedidoAtual.getCotacaoDolar()));
+        }
+        
+        System.out.println(RED + BOLD + "╚════════════════════════════════════════╝" + RESET);
+        System.out.println(YELLOW + BOLD + "\n🎉 Obrigado por escolher o ManagerEAT! 🎉" + RESET);
+        System.out.println(CYAN + "Volte sempre! 😊\n" + RESET);
+    }
+
     private static void gerarNotaFiscal() {
         System.out.println(RED + BOLD + "\n╔════════════════════════════════════════╗" + RESET);
         System.out.println(RED + BOLD + "║" + YELLOW + "          🧾 NOTA FISCAL ManagerEAT          " + RED + "║" + RESET);
