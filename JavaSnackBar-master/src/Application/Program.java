@@ -53,47 +53,52 @@ public class Program {
 
             switch (codigo) {
                 case 1:
+                    System.out.println(YELLOW + "🍔 Big Mac ManagerEAT selecionado!" + RESET);
                     System.out.println("Quantas unidades deseja?");
                     int quantidade1 = sc.nextInt();
-                    valor_total += quantidade1 * 4.00;
+                    valor_total += quantidade1 * 18.50;
                     quantidade_total += quantidade1;
-                    produtos.add("Cachorro Quente");
+                    produtos.add("Big Mac ManagerEAT");
                     quantidades_cada.add(quantidade1);
                     break;
 
                 case 2:
+                    System.out.println(YELLOW + "🥗 X-Salada ManagerEAT selecionado!" + RESET);
                     System.out.println("Quantas unidades deseja?");
                     int quantidade2 = sc.nextInt();
-                    valor_total += quantidade2 * 4.50;
+                    valor_total += quantidade2 * 15.00;
                     quantidade_total += quantidade2;
-                    produtos.add("X-Salada");
+                    produtos.add("X-Salada ManagerEAT");
                     quantidades_cada.add(quantidade2);
                     break;
 
                 case 3:
+                    System.out.println(YELLOW + "🥓 Bacon Burger Premium selecionado!" + RESET);
                     System.out.println("Quantas unidades deseja?");
                     int quantidade3 = sc.nextInt();
-                    valor_total += quantidade3 * 5.00;
+                    valor_total += quantidade3 * 22.00;
                     quantidade_total += quantidade3;
-                    produtos.add("X-Bacon");
+                    produtos.add("Bacon Burger Premium");
                     quantidades_cada.add(quantidade3);
                     break;
 
                 case 4:
+                    System.out.println(YELLOW + "🍟 Batata Frita Grande selecionada!" + RESET);
                     System.out.println("Quantas unidades deseja?");
                     int quantidade4 = sc.nextInt();
-                    valor_total += quantidade4 * 2.00;
+                    valor_total += quantidade4 * 12.00;
                     quantidade_total += quantidade4;
-                    produtos.add("Torrada Simples");
+                    produtos.add("Batata Frita Grande");
                     quantidades_cada.add(quantidade4);
                     break;
 
                 case 5:
+                    System.out.println(YELLOW + "🥤 Combo Refrigerante selecionado!" + RESET);
                     System.out.println("Quantas unidades deseja?");
                     int quantidade5 = sc.nextInt();
-                    valor_total += quantidade5 * 1.50;
+                    valor_total += quantidade5 * 10.50;
                     quantidade_total += quantidade5;
-                    produtos.add("Refrigerante");
+                    produtos.add("Combo Refrigerante");
                     quantidades_cada.add(quantidade5);
                     break;
 
