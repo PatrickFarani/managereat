@@ -110,7 +110,7 @@ public class Program {
                 System.out.print(YELLOW + "Deseja personalizar este lanche? (1=Sim, 0=Não): " + RESET);
                 int personalizar = sc.nextInt();
                 
-                if (personalizar.equalsIgnoreCase("s")) {
+                if (personalizar == 1) {
                     personalizarLanche(lanche);
                 }
                 
