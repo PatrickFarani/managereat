@@ -308,18 +308,86 @@ public class Program {
         System.out.printf(GREEN + BOLD + "💰 TOTAL: R$ %.2f\n" + RESET, pedidoAtual.getValorTotal());
     }
 
+    private static void gerenciarPedidos() {
+        int opcao;
+        do {
+            System.out.println(CYAN + BOLD + "\n═══════════ GERENCIAR PEDIDOS ═══════════" + RESET);
+            System.out.println(YELLOW + "1  👀 Ver Pedido Atual" + RESET);
+            System.out.println(YELLOW + "2  ✏️  Alterar Pedido Atual" + RESET);
+            System.out.println(YELLOW + "3  🗑️  Limpar Pedido Atual" + RESET);
+            System.out.println(YELLOW + "4  💳 Finalizar Pedido (com descontos e cotação USD)" + RESET);
+            System.out.println(RED + "0  ⬅️  Voltar" + RESET);
+            System.out.print(BLUE + "Escolha uma opção: " + RESET);
+            opcao = sc.nextInt();
+            
+            switch (opcao) {
+                case 1:
+                    verPedidoAtual();
+                    break;
+                case 2:
+                    alterarPedido();
+                    break;
+                case 3:
+                    limparPedido();
+                    break;
+                case 4:
+                    finalizarPedido();
+                    break;
+            }
+        } while (opcao != 0);
+    }
+    
+    private static void alterarPedido() {
+        if (pedidoAtual.getLanches().isEmpty()) {
+            System.out.println(YELLOW + "🛒 Pedido está vazio! Use 'Fazer Pedido' para adicionar itens." + RESET);
+            return;
+        }
+        
+        System.out.println(CYAN + BOLD + "\n📝 ITENS NO PEDIDO ATUAL:" + RESET);
+        for (int i = 0; i < pedidoAtual.getLanches().size(); i++) {
+            Lanche lanche = pedidoAtual.getLanches().get(i);
+            System.out.printf(YELLOW + "%d. %s - R$ %.2f\n" + RESET, 
+                (i + 1), lanche.toString(), lanche.calcularPrecoFinal());
+        }
+        
+        System.out.print(BLUE + "Digite o número do item para remover (0 para cancelar): " + RESET);
+        int escolha = sc.nextInt();
+        
+        if (escolha > 0 && escolha <= pedidoAtual.getLanches().size()) {
+            Lanche removido = pedidoAtual.getLanches().remove(escolha - 1);
+            pedidoAtual.calcularValorTotal();
+            System.out.println(GREEN + "✅ " + removido.getNome() + " removido do pedido!" + RESET);
+        }
+    }
+    
+    private static void limparPedido() {
+        if (!pedidoAtual.getLanches().isEmpty()) {
+            System.out.print(YELLOW + "⚠️  Tem certeza que deseja limpar todo o pedido? (s/n): " + RESET);
+            String confirmacao = sc.next();
+            if (confirmacao.equalsIgnoreCase("s")) {
+                pedidoAtual = new Pedido();
+                System.out.println(GREEN + "✅ Pedido limpo com sucesso!" + RESET);
+            }
+        } else {
+            System.out.println(YELLOW + "🛒 O pedido já está vazio!" + RESET);
+        }
+    }
+
     private static void finalizarPedido() {
         if (pedidoAtual.getLanches().isEmpty()) {
             System.out.println(RED + "❌ Não há itens no pedido!" + RESET);
             return;
         }
         
+        // Aplicar descontos e promoções
+        pedidoAtual.aplicarDescontos();
+        
         System.out.println(YELLOW + "💱 Buscando cotação do dólar..." + RESET);
         double cotacao = CotacaoAPI.obterCotacaoDolar();
         pedidoAtual.setCotacaoDolar(cotacao);
         
-        // Gerar nota fiscal
-        gerarNotaFiscal();
+        // Gerar nota fiscal com descontos
+        gerarNotaFiscalCompleta();
         
         // Salvar pedido para relatórios
         RelatorioVendas.salvarPedido(pedidoAtual);
@@ -328,6 +396,74 @@ public class Program {
         
         // Reiniciar pedido
         pedidoAtual = new Pedido();
+    }
+    
+    private static void gerenciarLanches() {
+        if (!SistemaAutenticacao.podeGerenciarLanches()) {
+            System.out.println(RED + "❌ Acesso negado! Apenas Admin/Funcionário podem gerenciar lanches." + RESET);
+            return;
+        }
+        
+        int opcao;
+        do {
+            System.out.println(CYAN + BOLD + "\n═══════════ GERENCIAR LANCHES ═══════════" + RESET);
+            System.out.println(YELLOW + "1  ➕ Incluir Lanche" + RESET);
+            System.out.println(YELLOW + "2  ✏️  Alterar Lanche" + RESET);
+            System.out.println(YELLOW + "3  🗑️  Excluir Lanche" + RESET);
+            System.out.println(YELLOW + "4  📋 Visualizar Lanches" + RESET);
+            System.out.println(RED + "0  ⬅️  Voltar" + RESET);
+            System.out.print(BLUE + "Escolha uma opção: " + RESET);
+            opcao = sc.nextInt();
+            
+            switch (opcao) {
+                case 1:
+                    incluirLanche();
+                    break;
+                case 2:
+                    alterarLanche();
+                    break;
+                case 3:
+                    excluirLanche();
+                    break;
+                case 4:
+                    GerenciadorLanches.exibirCardapioCompleto();
+                    break;
+            }
+        } while (opcao != 0);
+    }
+    
+    private static void gerenciarIngredientes() {
+        if (!SistemaAutenticacao.podeGerenciarIngredientes()) {
+            System.out.println(RED + "❌ Acesso negado! Apenas Admin pode gerenciar ingredientes." + RESET);
+            return;
+        }
+        
+        int opcao;
+        do {
+            System.out.println(CYAN + BOLD + "\n═══════════ GERENCIAR INGREDIENTES ═══════════" + RESET);
+            System.out.println(YELLOW + "1  ➕ Incluir Ingrediente" + RESET);
+            System.out.println(YELLOW + "2  ✏️  Alterar Ingrediente" + RESET);
+            System.out.println(YELLOW + "3  🗑️  Excluir Ingrediente" + RESET);
+            System.out.println(YELLOW + "4  📋 Visualizar Ingredientes" + RESET);
+            System.out.println(RED + "0  ⬅️  Voltar" + RESET);
+            System.out.print(BLUE + "Escolha uma opção: " + RESET);
+            opcao = sc.nextInt();
+            
+            switch (opcao) {
+                case 1:
+                    incluirIngrediente();
+                    break;
+                case 2:
+                    alterarIngrediente();
+                    break;
+                case 3:
+                    excluirIngrediente();
+                    break;
+                case 4:
+                    GerenciadorIngredientes.exibirListaIngredientes();
+                    break;
+            }
+        } while (opcao != 0);
     }
 
     private static void gerarNotaFiscal() {
