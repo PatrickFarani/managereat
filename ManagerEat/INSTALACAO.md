@@ -133,7 +133,7 @@ java -cp src Application.Program
 ### Erro de compilação: "package does not exist"
 **Solução:** Compile a partir do diretório correto
 ```bash
-# Certifique-se de estar na pasta JavaSnackBar-master
+# Certifique-se de estar na pasta ManagerEat
 javac src/Application/*.java
 ```
 
