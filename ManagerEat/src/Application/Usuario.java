@@ -23,6 +23,16 @@ public class Usuario {
         this.dataCadastro = LocalDate.now();
         this.ativo = true;
     }
+    
+    // Construtor especial para teste (cliente antigo)
+    public Usuario(String login, String senha, String nome, TipoUsuario tipo, LocalDate dataCadastro) {
+        this.login = login;
+        this.senha = senha;
+        this.nome = nome;
+        this.tipo = tipo;
+        this.dataCadastro = dataCadastro;
+        this.ativo = true;
+    }
 
     public boolean autenticar(String senha) {
         return this.senha.equals(senha) && this.ativo;
