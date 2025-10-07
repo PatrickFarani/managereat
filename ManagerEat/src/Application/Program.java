@@ -193,26 +193,19 @@ public class Program {
     }
 
     private static Lanche criarLanche(int codigo) {
-        switch (codigo) {
-            case 1:
-                System.out.println(YELLOW + "🍔 Big Mac ManagerEAT selecionado!" + RESET);
-                return new Lanche("Big Mac ManagerEAT", 18.50);
-            case 2:
-                System.out.println(YELLOW + "🥗 X-Salada ManagerEAT selecionado!" + RESET);
-                return new Lanche("X-Salada ManagerEAT", 15.00);
-            case 3:
-                System.out.println(YELLOW + "🥓 Bacon Burger Premium selecionado!" + RESET);
-                return new Lanche("Bacon Burger Premium", 22.00);
-            case 4:
-                System.out.println(YELLOW + "🍟 Batata Frita Grande selecionada!" + RESET);
-                return new Lanche("Batata Frita Grande", 12.00);
-            case 5:
-                System.out.println(YELLOW + "🥤 Combo Refrigerante selecionado!" + RESET);
-                return new Lanche("Combo Refrigerante", 10.50);
-            default:
-                System.out.println(RED + "❌ Código inválido!" + RESET);
-                return null;
+        List<String> nomesLanches = GerenciadorLanches.getNomesLanches();
+        
+        if (codigo > 0 && codigo <= nomesLanches.size()) {
+            String nomeLanche = nomesLanches.get(codigo - 1);
+            Lanche lanche = GerenciadorLanches.buscarLanche(nomeLanche);
+            if (lanche != null) {
+                System.out.printf(YELLOW + "✅ %s selecionado!" + RESET + "\n", nomeLanche);
+                return new Lanche(lanche.getNome(), lanche.getPrecoBase());
+            }
         }
+        
+        System.out.println(RED + "❌ Código inválido!" + RESET);
+        return null;
     }
 
     private static void personalizarLanche(Lanche lanche) {
