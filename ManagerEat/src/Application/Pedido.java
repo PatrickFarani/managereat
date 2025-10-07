@@ -34,6 +34,11 @@ public class Pedido {
             valorTotal += lanche.calcularPrecoFinal();
         }
     }
+    
+    public void aplicarDescontos() {
+        descontos = SistemaDescontos.calcularDescontos(this);
+        valorTotal = descontos.getValorFinal();
+    }
 
     public void setCotacaoDolar(double cotacao) {
         this.cotacaoDolar = cotacao;
