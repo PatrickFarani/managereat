@@ -145,7 +145,7 @@ javac src/Application/*.java
 ## 📁 Estrutura de Arquivos Esperada
 
 ```
-JavaSnackBar-master/
+ManagerEat/
 ├── src/
 │   └── Application/
 │       ├── Program.java
