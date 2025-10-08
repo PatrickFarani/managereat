@@ -50,3 +50,19 @@ resumo final dos requisitos implementados no ManagerEAT:
 - Autenticação e autorização funcionando
 
 - Compilação sem erros encontrados
+
+- Para utilizar o programa :
+
+1 -Instale o Java Runtime para a versão 17 ou superior na maquina,  
+2 -Baixe do repositório publico do GIT o codigo PatrickFarani/managereat , 
+3 -Crie uma pasta na sua maquina e nomeie a pasta : managereat
+4-  Descompacte os fontes dentro desta pasta
+5 - Abra o CMD do DOS e execute : entre na pasta com o comando cd managereat
+6 – Dentro da pasta execute : java -cp ManagerEat\src Application.Program
+
+Utilizar segunda opção:
+
+Acesse: https://sourceforge.net/projects/launch4j/files/launch4j-3/3.50/launch4j-3.50-win32.exe/download
+
+Faça o download do Launch4j
+
